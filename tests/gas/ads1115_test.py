@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Created on 23 Jul 2016
+Created on 8 Oct 2018
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 """
@@ -18,15 +18,26 @@ from scs_host.sys.host import Host
 
 ADS1115.init()
 
-gain = ADS1115.GAIN_1p024
+gain = ADS1115.GAIN_1p024       # GAIN_1p024
 rate = ADS1115.RATE_8
 
-sn1 = ADS1115.MUX_A3_GND
-sn2 = ADS1115.MUX_A2_GND
-sn3 = ADS1115.MUX_A1_GND
-sn4 = ADS1115.MUX_A0_GND
+no2_we_channel = ADS1115.MUX_A0_GND         # on wrk ADC
+no2_ae_channel = ADS1115.MUX_A0_GND         # on aux ADC
 
-mux = sn4
+h2s_we_channel = ADS1115.MUX_A2_GND         # on wrk ADC
+co_we_channel = ADS1115.MUX_A3_GND          # on wrk ADC
+
+gnd_wrk_channel = ADS1115.MUX_A1_GND        # on wrk ADC
+gnd_aux_channel = ADS1115.MUX_A1_GND        # on aux ADC
+
+
+# --------------------------------------------------------------------------------------------------------------------
+
+def read_conversion(device, channel):
+    device.start_conversion(channel, gain)
+    time.sleep(wrk.tconv)
+
+    return device.read_conversion()
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -39,21 +50,26 @@ try:
 
     aux = ADS1115(ADS1115.ADDR_AUX, rate)
     print("aux: %s" % aux)
-
-    wrk.start_conversion(mux, gain)
-    aux.start_conversion(mux, gain)
-
-    time.sleep(wrk.tconv)
-
-    v_wrk = wrk.read_conversion()
-    v_aux = aux.read_conversion()
-
-    print("wrk v: %0.6f" % v_wrk)
-    print("aux v: %0.6f" % v_aux)
     print("-")
 
-    v_wrk = wrk.convert(mux, gain)
-    print("wrk v: %0.6f" % v_wrk)
+    no2_we_v = read_conversion(wrk, no2_we_channel)
+    print("no2_we_v: %0.6f" % no2_we_v)
+
+    no2_ae_v = read_conversion(aux, no2_ae_channel)
+    print("no2_ae_v: %0.6f" % no2_ae_v)
+
+    h2s_we_v = read_conversion(wrk, h2s_we_channel)
+    print("h2s_we_v: %0.6f" % h2s_we_v)
+
+    co_we_v = read_conversion(wrk, co_we_channel)
+    print("co_we_v: %0.6f" % co_we_v)
+    print("-")
+
+    gnd_wrk_v = read_conversion(wrk, gnd_wrk_channel)
+    print("gnd_wrk_v: %0.6f" % gnd_wrk_v)
+
+    gnd_aux_v = read_conversion(aux, gnd_aux_channel)
+    print("gnd_aux_v: %0.6f" % gnd_aux_v)
 
 finally:
     I2C.close()

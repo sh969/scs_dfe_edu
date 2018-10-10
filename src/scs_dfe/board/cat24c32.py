@@ -10,6 +10,8 @@ in /boot/config.txt
 # dtparam=i2c_vc=on
 
 dtoverlay i2c-gpio i2c_gpio_sda=0 i2c_gpio_scl=1
+
+https://lb.raspberrypi.org/forums/viewtopic.php?t=108134
 """
 
 import time

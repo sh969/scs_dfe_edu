@@ -18,7 +18,7 @@ from scs_host.sys.host import Host
 
 ADS1115.init()
 
-gain = ADS1115.GAIN_1p024       # GAIN_1p024
+gain = ADS1115.GAIN_2p048       # GAIN_1p024
 rate = ADS1115.RATE_8
 
 no2_we_channel = ADS1115.MUX_A0_GND         # on wrk ADC

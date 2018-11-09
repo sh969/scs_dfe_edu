@@ -69,7 +69,7 @@ class OPCConf(PersistentJSONable):
 
 
     def opc(self, host):
-        if self.model == 'N2':
+        if self.model == OPCN2.SOURCE:
             return OPCN2(host.opc_spi_bus(), host.opc_spi_device())
 
         else:

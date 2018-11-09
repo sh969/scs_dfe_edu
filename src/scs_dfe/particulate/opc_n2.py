@@ -25,6 +25,8 @@ class OPCN2(object):
     """
     classdocs
     """
+    SOURCE =                            'N2'
+
     MIN_SAMPLE_PERIOD =                  5.0       # seconds
     MAX_SAMPLE_PERIOD =                 10.0       # seconds
     DEFAULT_SAMPLE_PERIOD =             10.0       # seconds
@@ -192,7 +194,8 @@ class OPCN2(object):
 
             now = LocalizedDatetime.now()
 
-            return OPCDatum(now, pm1, pm2p5, pm10, period, bins, bin_1_mtof, bin_3_mtof, bin_5_mtof, bin_7_mtof)
+            return OPCDatum(self.SOURCE, now, pm1, pm2p5, pm10, period, bins,
+                            bin_1_mtof, bin_3_mtof, bin_5_mtof, bin_7_mtof)
 
         finally:
             time.sleep(OPCN2.__CMD_DELAY)

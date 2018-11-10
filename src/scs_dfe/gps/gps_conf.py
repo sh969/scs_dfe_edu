@@ -34,7 +34,7 @@ class GPSConf(PersistentJSONable):
 
     @classmethod
     def construct_from_jdict(cls, _):
-        return None
+        return GPSConf(None)
 
 
     # ----------------------------------------------------------------------------------------------------------------

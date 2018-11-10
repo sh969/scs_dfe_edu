@@ -22,7 +22,7 @@ class LEDState(JSONable):
 
     @classmethod
     def construct_from_jdict(cls, _):
-        return None
+        return LEDState(None, None)
 
 
     # ----------------------------------------------------------------------------------------------------------------

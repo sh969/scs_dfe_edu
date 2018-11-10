@@ -1,34 +1,22 @@
 """
-Created on 16 Jul 2017
+Created on 10 Nov 2018
 
 @author: Bruno Beloff (bruno.beloff@southcoastscience.com)
 
-a dummy GPS configuration, to maintain compatibility with the DFE Eng package
-
-example JSON:
-{"model": null}
+a dummy LED state, to maintain compatibility with the DFE Eng package
 """
-
-import os
 
 from collections import OrderedDict
 
-from scs_core.data.json import PersistentJSONable
+from scs_core.data.json import JSONable
 
 
 # --------------------------------------------------------------------------------------------------------------------
 
-class GPSConf(PersistentJSONable):
+class LEDState(JSONable):
     """
     classdocs
     """
-
-    __FILENAME = "gps_conf.json"
-
-    @classmethod
-    def filename(cls, host):
-        return os.path.join(host.conf_dir(), cls.__FILENAME)
-
 
     # ----------------------------------------------------------------------------------------------------------------
 
@@ -39,24 +27,18 @@ class GPSConf(PersistentJSONable):
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, _):
+    # noinspection PyUnusedLocal
+    def __init__(self, colour0, colour1):
         """
         Constructor
         """
-        super().__init__()
+        pass
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
-    @staticmethod
-    def gps_monitor(_):
-        return None
-
-
-    # ----------------------------------------------------------------------------------------------------------------
-
-    @property
-    def model(self):
+    @classmethod
+    def is_valid(cls):
         return None
 
 
@@ -65,12 +47,25 @@ class GPSConf(PersistentJSONable):
     def as_json(self):
         jdict = OrderedDict()
 
-        jdict['model'] = None
+        jdict['colour0'] = None
+        jdict['colour1'] = None
 
         return jdict
 
 
     # ----------------------------------------------------------------------------------------------------------------
 
+    @property
+    def colour0(self):
+        return None
+
+
+    @property
+    def colour1(self):
+        return None
+
+
+    # ----------------------------------------------------------------------------------------------------------------
+
     def __str__(self, *args, **kwargs):
-        return "GPSConf:{model:None}"
+        return "LEDState:{colour0:None, colour1:None}"

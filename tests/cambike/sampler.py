@@ -51,11 +51,11 @@ def read_conversion(device, channel):
 
 try:
     I2C.open(Host.I2C_SENSORS)
-    opc = OPCR1(Host.opc_spi_bus(), Host.opc_spi_device())
-    opc.power_on()
-    time.sleep(1)
-    opc.operations_on()
-    time.sleep(1)
+#    opc = OPCR1(Host.opc_spi_bus(), Host.opc_spi_device())
+#    opc.power_on()
+#    time.sleep(1)
+#    opc.operations_on()
+#    time.sleep(1)
 
     while 1:
         # ads1115
@@ -84,8 +84,8 @@ try:
         print("gnd_aux_v: %0.6f" % gnd_aux_v)
     		
         # opc r1
-        datum = opc.sample() 
-        print(JSONify.dumps(datum))
+#        datum = opc.sample() 
+#        print(JSONify.dumps(datum))
     		
         # timing
         now = time.time()
@@ -99,6 +99,6 @@ except KeyboardInterrupt:
     print("KeyboardInterrupt", file=sys.stderr)
 		
 finally:
-    opc.operations_off()
-    opc.power_off()
+#    opc.operations_off()
+#    opc.power_off()
     I2C.close()

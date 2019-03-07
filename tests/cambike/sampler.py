@@ -6,7 +6,7 @@ Created on 7 Mar 2019
 @author: Sebastian Horstmann (sh969@cam.ac.uk)
 """
 
-# ads1115 (taken from /scs_dfe_edu/tests/gas/ads1115_test.py)
+# ads1115 (taken from scs_dfe_edu/tests/gas/ads1115_test.py)
 import time
 
 from scs_dfe.gas.ads1115 import ADS1115

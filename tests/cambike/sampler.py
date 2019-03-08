@@ -56,6 +56,7 @@ try:
 #    time.sleep(1)
 #    opc.operations_on()
 #    time.sleep(1)
+    checkpoint = time.time()
 
     while 1:
         # ads1115

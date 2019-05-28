@@ -64,6 +64,14 @@ try:
     while 1:
         counter+=1
         print(counter)
+    		
+        # opc r1
+        datum = opc.sample()
+        # print(JSONify.dumps(datum))
+        datum_dict = json.loads(JSONify.dumps(datum))
+        # datum_dict["no2_we_v"] = no2_we_v
+        # print(datum_dict["pm1"])
+        print(datum_dict)
 
         # ads1115
         wrk = ADS1115(ADS1115.ADDR_WRK, rate)
@@ -77,6 +85,7 @@ try:
         no2_we_v = read_conversion(wrk, no2_we_channel)
         # printf("%0.6f" % no2_we_v)
         electrochemicals.append(str(no2_we_v))
+        
     
         no2_ae_v = read_conversion(aux, no2_ae_channel)
         # print("%0.6f" % no2_ae_v)
@@ -99,14 +108,6 @@ try:
         electrochemicals.append(str(gnd_aux_v))
 
         print(electrochemicals)
-    		
-        # opc r1
-        datum = opc.sample()
-        # print(JSONify.dumps(datum))
-        datum_dict = json.loads(JSONify.dumps(datum))
-        datum_dict["no2_we_v"] = no2_we_v
-        # print(datum_dict["pm1"])
-        print(datum_dict)
     		
         # timing
         now = time.time()

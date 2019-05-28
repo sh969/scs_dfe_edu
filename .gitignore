@@ -113,4 +113,7 @@ venv.bak/
 **/*.xls
 **/*.xlsx
 
+# Googlke Drive
 **/desktop.ini
+desktop.ini
+**/*/desktop.ini

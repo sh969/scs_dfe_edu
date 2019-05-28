@@ -19,6 +19,7 @@ import sys
 
 from scs_core.data.json import JSONify
 import json
+import csv
 
 from scs_dfe.particulate.opc_r1.opc_r1 import OPCR1
 
@@ -59,6 +60,7 @@ try:
     time.sleep(1)
     checkpoint = time.time()
     counter = 0
+    filename = "/log/"+str(checkpoint)+".csv"
 
     while 1:
         counter+=1
@@ -106,6 +108,17 @@ try:
 
         # print(datum_dict["pm1"])
         print(datum_dict)
+ 
+        log_file = open(filename, 'w')
+        csvwriter = csv.writer(log_file)
+        z = 0
+        for item in datum_dict:
+             if z == 0:
+                 header = item.keys()
+                 csvwriter.writerow(header)
+                 z += 1
+            csvwriter.writerow(item.values())
+        log_file.close()
 
         checkpoint = now
         time.sleep(5)

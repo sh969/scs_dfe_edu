@@ -63,15 +63,14 @@ try:
 
     while 1:
         counter+=1
-        print(counter)
     		
         # opc r1
         datum = opc.sample()
         # print(JSONify.dumps(datum))
         datum_dict = json.loads(JSONify.dumps(datum))
-        # datum_dict["no2_we_v"] = no2_we_v
-        # print(datum_dict["pm1"])
-        print(datum_dict)
+
+        datum_dict["counter"] = counter
+
 
         # ads1115
         wrk = ADS1115(ADS1115.ADDR_WRK, rate)
@@ -79,39 +78,41 @@ try:
 
         aux = ADS1115(ADS1115.ADDR_AUX, rate)
         # print(",", aux)
-    
-        electrochemicals = []
 
         no2_we_v = read_conversion(wrk, no2_we_channel)
         # printf("%0.6f" % no2_we_v)
-        electrochemicals.append(str(no2_we_v))
-        
+        datum_dict["el_chem"]["no2_we_v"] = no2_we_v
     
         no2_ae_v = read_conversion(aux, no2_ae_channel)
         # print("%0.6f" % no2_ae_v)
-        electrochemicals.append(str(no2_ae_v))
+        datum_dict["el_chem"]["no2_ae_v"] = no2_ae_v
     
         h2s_we_v = read_conversion(wrk, h2s_we_channel)
         # print("%0.6f" % h2s_we_v)
-        electrochemicals.append(str(h2s_we_channel))
+        datum_dict["el_chem"]["h2s_we_v"] = h2s_we_v
     
         co_we_v = read_conversion(wrk, co_we_channel)
         # print("%0.6f" % co_we_v)
-        electrochemicals.append(str(co_we_v))
+        datum_dict["el_chem"]["co_we_v"] = co_we_v
     
         gnd_wrk_v = read_conversion(wrk, gnd_wrk_channel)
         # print("%0.6f" % gnd_wrk_v)
-        electrochemicals.append(str(gnd_wrk_v))
+        datum_dict["el_chem"]["gnd_wrk_channel"] = gnd_wrk_channel
     
         gnd_aux_v = read_conversion(aux, gnd_aux_channel)
         # print("%0.6f" % gnd_aux_v)
-        electrochemicals.append(str(gnd_aux_v))
-
-        print(electrochemicals)
+        datum_dict["el_chem"]["gnd_aux_channel"] = gnd_aux_channel
     		
+
+
         # timing
         now = time.time()
-        print("interval: %0.3f" % round(now - checkpoint, 3))
+        datum_dict["interval"] = round(now - checkpoint, 3)
+        # print("interval: %0.3f" % round(now - checkpoint, 3))
+
+        # print(datum_dict["pm1"])
+        print(datum_dict)
+
         checkpoint = now
         time.sleep(5)
 

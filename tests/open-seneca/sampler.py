@@ -62,9 +62,7 @@ try:
     counter = 0
     filename = "/log/"+str(checkpoint)+".csv"
 
-    while 1:
-        counter+=1
-    		
+    while 1:    		
         # opc r1
         datum = opc.sample()
         # print(JSONify.dumps(datum))
@@ -82,24 +80,34 @@ try:
 
         no2_we_v = read_conversion(wrk, no2_we_channel)
         # printf("%0.6f" % no2_we_v)
+        datum_dict["no2_we_v"] = no2_we_v
 
         no2_ae_v = read_conversion(aux, no2_ae_channel)
         # print("%0.6f" % no2_ae_v)
+        datum_dict["no2_ae_v"] = no2_ae_v
     
         h2s_we_v = read_conversion(wrk, h2s_we_channel)
         # print("%0.6f" % h2s_we_v)
+        datum_dict["h2s_we_v"] = h2s_we_v
     
         co_we_v = read_conversion(wrk, co_we_channel)
         # print("%0.6f" % co_we_v)
+        datum_dict["co_we_v"] = co_we_v
     
         gnd_wrk_v = read_conversion(wrk, gnd_wrk_channel)
-        # print("%0.6f" % gnd_wrk_v)
+        # print("%0.6f" % gnd_wrk_v)        
+        datum_dict["gnd_wrk_v"] = gnd_wrk_v
     
         gnd_aux_v = read_conversion(aux, gnd_aux_channel)
         # print("%0.6f" % gnd_aux_v)
+        datum_dict["gnd_aux_v"] = gnd_aux_v
 
-        datum_dict["el_chem"] = {"no2_we_v":no2_we_v, "no2_ae_v":no2_ae_v, "h2s_we_v":h2s_we_v, "co_we_v":co_we_v, "gnd_wrk_channel":gnd_wrk_channel, "gnd_aux_channel":gnd_aux_channel}
-    		
+        # datum_dict["el_chem"] = {"no2_we_v":no2_we_v, "no2_ae_v":no2_ae_v, "h2s_we_v":h2s_we_v, "co_we_v":co_we_v, "gnd_wrk_channel":gnd_wrk_channel, "gnd_aux_channel":gnd_aux_channel}
+    	
+        # Reformat SHT readings
+        datum_dict["hmd"] = datum_dict["sht"]["hmd"]
+        datum_dict["tmp"] = datum_dict["sht"]["tmp"]
+        del datum_dict["sht"]
 
         # timing
         now = time.time()
@@ -111,16 +119,15 @@ try:
  
         log_file = open(filename, 'w')
         csvwriter = csv.writer(log_file)
-        z = 0
         for item in datum_dict:
-             if z == 0:
+             if counter == 0:
                  header = item.keys()
                  csvwriter.writerow(header)
-                 z += 1
             csvwriter.writerow(item.values())
         log_file.close()
 
         checkpoint = now
+        counter+=1
         time.sleep(5)
 
     sys.stdout.flush()

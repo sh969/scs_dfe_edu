@@ -58,7 +58,6 @@ try:
     opc.operations_on()
     time.sleep(1)
     checkpoint = time.time()
-    print("Counter,wrk,aux,no2_we_v,no2_ae_v,h2s_we_v,co_we_v,gnd_wrk_v,gnd_aux_v")
     counter = 0
 
     while 1:
@@ -111,7 +110,7 @@ try:
         # print("interval: %0.3f" % round(now - checkpoint, 3))
 
         # print(datum_dict["pm1"])
-        print(datum_dict)
+        print(json.dumps(datum_dict))
 
         checkpoint = now
         time.sleep(5)

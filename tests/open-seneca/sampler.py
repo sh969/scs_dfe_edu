@@ -61,7 +61,7 @@ try:
     counter = 0
 
     while 1:
-        counter++
+        counter+=1
         print(counter)
         # ads1115
         wrk = ADS1115(ADS1115.ADDR_WRK, rate)

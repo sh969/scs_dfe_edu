@@ -18,6 +18,7 @@ from scs_host.sys.host import Host
 import sys
 
 from scs_core.data.json import JSONify
+import json
 
 from scs_dfe.particulate.opc_r1.opc_r1 import OPCR1
 
@@ -102,7 +103,7 @@ try:
         # opc r1
         datum = opc.sample()
         # print(JSONify.dumps(datum))
-        datum_dict = JSONify.loads(datum)
+        datum_dict = json.loads(datum)
         print(datum_dict)
     		
         # timing

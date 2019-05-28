@@ -57,32 +57,38 @@ try:
     opc.operations_on()
     time.sleep(1)
     checkpoint = time.time()
+    print("Counter,wrk,aux,no2_we_v,no2_ae_v,h2s_we_v,co_we_v,gnd_wrk_v,gnd_aux_v")
+    counter = 0
 
     while 1:
+        counter++
+        print(counter)
         # ads1115
         wrk = ADS1115(ADS1115.ADDR_WRK, rate)
-        print("wrk: %s" % wrk)
+        print("," % wrk)
 
         aux = ADS1115(ADS1115.ADDR_AUX, rate)
-        print("aux: %s" % aux)
+        print("," % aux)
     
         no2_we_v = read_conversion(wrk, no2_we_channel)
-        print("no2_we_v: %0.6f" % no2_we_v)
+        print(",%0.6f" % no2_we_v)
     
         no2_ae_v = read_conversion(aux, no2_ae_channel)
-        print("no2_ae_v: %0.6f" % no2_ae_v)
+        print(",%0.6f" % no2_ae_v)
     
         h2s_we_v = read_conversion(wrk, h2s_we_channel)
-        print("h2s_we_v: %0.6f" % h2s_we_v)
+        print(",%0.6f" % h2s_we_v)
     
         co_we_v = read_conversion(wrk, co_we_channel)
-        print("co_we_v: %0.6f" % co_we_v)
+        print(",%0.6f" % co_we_v)
     
         gnd_wrk_v = read_conversion(wrk, gnd_wrk_channel)
-        print("gnd_wrk_v: %0.6f" % gnd_wrk_v)
+        print(",%0.6f" % gnd_wrk_v)
     
         gnd_aux_v = read_conversion(aux, gnd_aux_channel)
-        print("gnd_aux_v: %0.6f" % gnd_aux_v)
+        print(",%0.6f" % gnd_aux_v)
+
+        print("\n")
     		
         # opc r1
         datum = opc.sample() 

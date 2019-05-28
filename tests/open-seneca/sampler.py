@@ -98,12 +98,11 @@ try:
         electrochemicals.append(str(gnd_aux_v))
 
         print(electrochemicals)
-        # print("%0.6f" % no2_we_v % no2_ae_v % h2s_we_v % co_we_channel % gnd_wrk_channel % gnd_aux_channel)
     		
         # opc r1
-        datum = opc.sample() 
+        datum = opc.sample()
         # print(JSONify.dumps(datum))
-        print(datum)
+        print(datum["sht"])
     		
         # timing
         now = time.time()

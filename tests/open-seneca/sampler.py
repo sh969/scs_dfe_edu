@@ -102,7 +102,8 @@ try:
         # opc r1
         datum = opc.sample()
         # print(JSONify.dumps(datum))
-        print(datum[4])
+        datum_dict = JSONify.loads(datum)
+        print(datum_dict)
     		
         # timing
         now = time.time()

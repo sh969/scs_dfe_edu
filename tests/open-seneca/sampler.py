@@ -71,25 +71,34 @@ try:
         aux = ADS1115(ADS1115.ADDR_AUX, rate)
         # print(",", aux)
     
+        electrochemicals = []
+
         no2_we_v = read_conversion(wrk, no2_we_channel)
         # printf("%0.6f" % no2_we_v)
+        electrochemicals.append(String(no2_we_v))
     
         no2_ae_v = read_conversion(aux, no2_ae_channel)
         # print("%0.6f" % no2_ae_v)
+        electrochemicals.append(String(no2_ae_v))
     
         h2s_we_v = read_conversion(wrk, h2s_we_channel)
         # print("%0.6f" % h2s_we_v)
+        electrochemicals.append(String(h2s_we_channel))
     
         co_we_v = read_conversion(wrk, co_we_channel)
         # print("%0.6f" % co_we_v)
+        electrochemicals.append(String(co_we_v))
     
         gnd_wrk_v = read_conversion(wrk, gnd_wrk_channel)
         # print("%0.6f" % gnd_wrk_v)
+        electrochemicals.append(String(gnd_wrk_v))
     
         gnd_aux_v = read_conversion(aux, gnd_aux_channel)
         # print("%0.6f" % gnd_aux_v)
+        electrochemicals.append(String(gnd_aux_v))
 
-        print("%0.6f" % no2_we_v % no2_ae_v % h2s_we_v % co_we_channel % gnd_wrk_channel % gnd_aux_channel)
+        print(electrochemicals)
+        print("%0.6f" % no2_we_v "%0.6f" % no2_ae_v "%0.6f" % h2s_we_v "%0.6f" % co_we_channel "%0.6f" % gnd_wrk_channel "%0.6f" % gnd_aux_channel)
     		
         # opc r1
         datum = opc.sample() 

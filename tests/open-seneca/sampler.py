@@ -117,14 +117,14 @@ try:
         # print(datum_dict["pm1"])
         print(datum_dict)
  
-        log_file = open(filename, 'w')
-        csvwriter = csv.writer(log_file)
-        for item in datum_dict:
-             if counter == 0:
-                 header = item.keys()
-                 csvwriter.writerow(header)
-            csvwriter.writerow(item.values())
-        log_file.close()
+        # log_file = open(filename, 'w')
+        # csvwriter = csv.writer(log_file)
+        # for item in datum_dict:
+        #      if counter == 0:
+        #          header = item.keys()
+        #          csvwriter.writerow(header)
+        #     csvwriter.writerow(item.values())
+        # log_file.close()
 
         checkpoint = now
         counter+=1

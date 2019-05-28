@@ -60,7 +60,7 @@ try:
     time.sleep(1)
     checkpoint = time.time()
     counter = 0
-    filename = "~/SCS/"+str(checkpoint)+".csv"
+    filename = "str(checkpoint)+".csv"
 
     while 1:    		
         # opc r1
@@ -117,15 +117,17 @@ try:
         # print(datum_dict["pm1"])
         print(datum_dict)
  
-        log_file = open(filename, 'w')
+        # logging to the SD card
+        header = []
+        data = []
+        log_file = open(filename, 'a', newline='')
         csvwriter = csv.writer(log_file)
-        for key, val in datum_dict.items():
-            #  if counter == 0:
-            #      header = item.keys()
-            #      print(header)
-            #      csvwriter.writerow(header)
-            # csvwriter.writerow(item.values())
-            csvwriter.writerow([key, val])
+        for item in datum_dict:
+            if counter == 0:
+                header.append(item)
+            data.append(datum_dict[item])
+        csvwriter.writerow(header)
+        csvwriter.writerow(data)
         log_file.close()
 
         checkpoint = now

@@ -104,7 +104,7 @@ try:
         datum = opc.sample()
         # print(JSONify.dumps(datum))
         datum_dict = json.loads(JSONify.dumps(datum))
-        datum{"no2_we_v"} = no2_we_v
+        datum_dict{"no2_we_v"} = no2_we_v
         # print(datum_dict["pm1"])
         print(datum_dict)
     		

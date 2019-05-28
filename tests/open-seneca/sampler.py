@@ -80,29 +80,24 @@ try:
 
         no2_we_v = read_conversion(wrk, no2_we_channel)
         # printf("%0.6f" % no2_we_v)
-        datum_dict["el_chem"] = {"no2_we_v":no2_we_v}
-    
+
         no2_ae_v = read_conversion(aux, no2_ae_channel)
         # print("%0.6f" % no2_ae_v)
-        datum_dict["el_chem"] = {"no2_ae_v":no2_ae_v}
     
         h2s_we_v = read_conversion(wrk, h2s_we_channel)
         # print("%0.6f" % h2s_we_v)
-        datum_dict["el_chem"] = {"h2s_we_v":h2s_we_v}
     
         co_we_v = read_conversion(wrk, co_we_channel)
         # print("%0.6f" % co_we_v)
-        datum_dict["el_chem"] = {"co_we_v":co_we_v}
     
         gnd_wrk_v = read_conversion(wrk, gnd_wrk_channel)
         # print("%0.6f" % gnd_wrk_v)
-        datum_dict["el_chem"] = {"gnd_wrk_channel":gnd_wrk_channel}
     
         gnd_aux_v = read_conversion(aux, gnd_aux_channel)
         # print("%0.6f" % gnd_aux_v)
-        datum_dict["el_chem"] = {"gnd_aux_channel":gnd_aux_channel}
-    		
 
+        datum_dict["el_chem"] = {"no2_we_v":no2_we_v, "no2_ae_v":no2_ae_v, "h2s_we_v":h2s_we_v, "co_we_v":co_we_v, "gnd_wrk_channel":gnd_wrk_channel, "gnd_aux_channel":gnd_aux_channel}
+    		
 
         # timing
         now = time.time()
@@ -110,7 +105,7 @@ try:
         # print("interval: %0.3f" % round(now - checkpoint, 3))
 
         # print(datum_dict["pm1"])
-        print(json.dumps(datum_dict))
+        print(datum_dict)
 
         checkpoint = now
         time.sleep(5)

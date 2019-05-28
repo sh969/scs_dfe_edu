@@ -60,7 +60,7 @@ try:
     time.sleep(1)
     checkpoint = time.time()
     counter = 0
-    filename = "/str(checkpoint)+".csv"
+    filename = /str(checkpoint)+".csv"
 
     while 1:    		
         # opc r1

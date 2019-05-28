@@ -103,7 +103,7 @@ try:
         # opc r1
         datum = opc.sample()
         # print(JSONify.dumps(datum))
-        datum_dict = json.loads(datum)
+        datum_dict = json.loads(JSONify.dumps(datum))
         print(datum_dict)
     		
         # timing

@@ -112,3 +112,5 @@ venv.bak/
 **/*.numbers
 **/*.xls
 **/*.xlsx
+
+**/desktop.ini

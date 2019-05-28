@@ -126,7 +126,7 @@ try:
             if counter == 0:
                 header.append(item)
             data.append(datum_dict[item])
-        csvwriter.writerow(header)
+        if counter == 0: csvwriter.writerow(header)
         csvwriter.writerow(data)
         log_file.close()
 

@@ -98,7 +98,7 @@ try:
         electrochemicals.append(String(gnd_aux_v))
 
         print(electrochemicals)
-        print("%0.6f" % no2_we_v "%0.6f" % no2_ae_v "%0.6f" % h2s_we_v "%0.6f" % co_we_channel "%0.6f" % gnd_wrk_channel "%0.6f" % gnd_aux_channel)
+        print("%0.6f" % no2_we_v % no2_ae_v % h2s_we_v % co_we_channel % gnd_wrk_channel % gnd_aux_channel)
     		
         # opc r1
         datum = opc.sample() 

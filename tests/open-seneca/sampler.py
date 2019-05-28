@@ -65,10 +65,10 @@ try:
         print(counter)
         # ads1115
         wrk = ADS1115(ADS1115.ADDR_WRK, rate)
-        print("," wrk)
+        print(",", wrk)
 
         aux = ADS1115(ADS1115.ADDR_AUX, rate)
-        print("," aux)
+        print(",", aux)
     
         no2_we_v = read_conversion(wrk, no2_we_channel)
         print(",%0.6f" % no2_we_v)

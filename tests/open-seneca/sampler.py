@@ -119,11 +119,12 @@ try:
  
         # log_file = open(filename, 'w')
         # csvwriter = csv.writer(log_file)
-        # for item in datum_dict:
-        #      if counter == 0:
-        #          header = item.keys()
-        #          csvwriter.writerow(header)
-        #     csvwriter.writerow(item.values())
+        for item in datum_dict:
+             if counter == 0:
+                 header = item.keys()
+                 print(header)
+            #      csvwriter.writerow(header)
+            # csvwriter.writerow(item.values())
         # log_file.close()
 
         checkpoint = now

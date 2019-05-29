@@ -172,6 +172,9 @@ try:
         dataframe = readGPS(ser, dataframe)          
         # Stop GNSS data received via UART so you can send data via GPRS    
         txrx_force(ser, 'AT+CGNSTST=0\r\n', 'OK', 5)
+
+        dataframe.update(datum_dict)
+
         # Prep send
         txrx_force(ser, 'AT+HTTPDATA='+ str(len(json.dumps(dataframe)))+',10000\r\n', 'DOWNLOAD', 5)
         # Load data

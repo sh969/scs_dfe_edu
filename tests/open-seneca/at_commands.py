@@ -12,16 +12,16 @@ def sim800_respond(port, expected_answer, time_out):
     response = []
     while answer == False:
         response.append(port.readline().strip().decode('ascii'))
-        print(abort)
-        print(response[-1])
+        #print(abort)
+        #print(response[-1])
         if (expected_answer in response[-1]) or (abort >= time_out):
             answer = True
         elif "ERROR" in response[-1] and (("AT+HTTPINIT" in response[-2]) or ("AT+SAPBR=1,1" in response[-2])) == 0:
-            print("gps off")
+            #print("gps off")
             GPSoff(port)
-            print("gprs_on")
+            #print("gprs_on")
             GPRSstartup(port, APN, URL)
-            print("gps_on")
+            #print("gps_on")
             GPSstartup(port)
             
         else:
@@ -139,7 +139,7 @@ def readGPS(port, dataframe):
                 dataframe["alt"] = msg.altitude; 
                 dataframe["hhop"] = msg.horizontal_dil;
                 check1 = 1
-                print(dataframe)
+                #print(dataframe)
     
         if 'GNRMC' in fd:
             ps=fd.find('$GNRMC')

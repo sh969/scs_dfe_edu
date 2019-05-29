@@ -147,7 +147,6 @@ try:
         # print("interval: %0.3f" % round(now - checkpoint, 3))
 
         # print(datum_dict["pm1"])
-        print(datum_dict)
  
         # logging to the SD card
         header = []
@@ -174,6 +173,7 @@ try:
         txrx_force(ser, 'AT+CGNSTST=0\r\n', 'OK', 5)
 
         dataframe.update(datum_dict)
+        print(dataframe)
 
         # Prep send
         txrx_force(ser, 'AT+HTTPDATA='+ str(len(json.dumps(dataframe)))+',10000\r\n', 'DOWNLOAD', 5)

@@ -27,7 +27,7 @@ from scs_dfe.particulate.opc_r1.opc_r1 import OPCR1
 import serial
 import datetime
 import pynmea2
-from at_commands import *
+from pi_hut.at_commands import *
 
 # --------------------------------------------------------------------------------------------------------------------
 

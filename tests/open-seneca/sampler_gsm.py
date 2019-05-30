@@ -171,10 +171,10 @@ try:
         data = []
         log_file = open(filename, 'a', newline='')
         csvwriter = csv.writer(log_file)
-        for item in datum_dict:
+        for item in dataframe:
             if counter == 0:
                 header.append(item)
-            data.append(datum_dict[item])
+            data.append(dataframe[item])
         if counter == 0: csvwriter.writerow(header)
         csvwriter.writerow(data)
         log_file.close()

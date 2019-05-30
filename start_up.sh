@@ -12,7 +12,7 @@ if [ $? -eq 0 ]; then
     if [ -f "$FILE" ]; then
         echo "$FILE exist"
         rm -r -f /home/pi/SCS/scs_dfe_edu
-        cp -f /home/pi/scs_dfe_edu /home/pi/SCS/
+        cp -r -f /home/pi/scs_dfe_edu /home/pi/SCS/
         cp -f /home/pi/SCS/scs_dfe_edu/start_up.sh /home/pi/
         cd /home/pi/
         chmod 755 start_up.sh

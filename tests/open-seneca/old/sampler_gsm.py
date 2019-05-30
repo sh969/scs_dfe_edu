@@ -34,7 +34,7 @@ from at_commands import *
 ser = serial.Serial("/dev/ttyUSB0", baudrate=115200, timeout=5)
 
 time.sleep(5)
-APN = 'safaricom'
+APN = 'TM'
 URL = 'www.ppp.one/gps.php'
 
 dataframe = {
@@ -48,11 +48,11 @@ dataframe = {
 
 
 print("gps off")
-GPSoff(APN, URL, ser)
+GPSoff(ser)
 print("gprs_on")
-GPRSstartup(APN, URL, ser)
+GPRSstartup(ser, APN, URL)
 print("gps_on")
-GPSstartup(APN, URL, ser)
+GPSstartup(ser)
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -166,21 +166,21 @@ try:
         # --------------------------------------------------------------------------------------------------------------------
 
         # Start GNSS data received via UART
-        txrx_force(APN, URL, ser, 'AT+CGNSTST=1\r\n', 'OK', 5)
+        txrx_force(ser, 'AT+CGNSTST=1\r\n', 'OK', 5)
         # Get one dataframe (see above) from GNSS string
-        dataframe = readGPS(APN, URL, ser, dataframe)          
+        dataframe = readGPS(ser, dataframe)          
         # Stop GNSS data received via UART so you can send data via GPRS    
-        txrx_force(APN, URL, ser, 'AT+CGNSTST=0\r\n', 'OK', 5)
+        txrx_force(ser, 'AT+CGNSTST=0\r\n', 'OK', 5)
 
         dataframe.update(datum_dict)
         print(dataframe)
 
         # Prep send
-        txrx_force(APN, URL, ser, 'AT+HTTPDATA='+ str(len(json.dumps(dataframe)))+',10000\r\n', 'DOWNLOAD', 5)
+        txrx_force(ser, 'AT+HTTPDATA='+ str(len(json.dumps(dataframe)))+',10000\r\n', 'DOWNLOAD', 5)
         # Load data
-        txrx_force(APN, URL, ser, json.dumps(dataframe) + '\r\n', 'OK', 5)    
+        txrx_force(ser, json.dumps(dataframe) + '\r\n', 'OK', 5)    
         # Post the data
-        txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', '+HTTPACTION: 1,200,1', 5)
+        txrx_force(ser, 'AT+HTTPACTION=1\r\n', '+HTTPACTION: 1,200,1', 5)
 
         # --------------------------------------------------------------------------------------------------------------------
 

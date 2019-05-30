@@ -15,11 +15,11 @@ def sim800_respond(APN, URL, port, expected_answer, time_out):
             answer = True
         elif "ERROR" in response[-1] and (("AT+HTTPINIT" in response[-2]) or ("AT+SAPBR=1,1" in response[-2])) == 0:
             #print("gps off")
-            GPSoff(port)
+            GPSoff(APN, URL, port)
             #print("gprs_on")
             GPRSstartup(port, APN, URL)
             #print("gps_on")
-            GPSstartup(port)
+            GPSstartup(APN, URL, port)
             
         else:
             time.sleep(0.1)

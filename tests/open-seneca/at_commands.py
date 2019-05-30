@@ -88,17 +88,19 @@ def GPRSstartup(APN, URL, port):
     time.sleep(1)
 
     #Read IMEI number
-    text = 'AT+CGSN'
+    text = 'AT+CGSN\r\n'
     port.write(text.encode())
     time.sleep(1)
     imei = port.readline().strip().decode('ascii')
+    print(imei)
     time.sleep(1)
 
     #Read SIM number
-    text = 'AT+CNUM'
+    text = 'AT+CNUM\r\n'
     port.write(text.encode())
     time.sleep(1)
     cnum = port.readline().strip().decode('ascii')
+    print(cnum)
     time.sleep(1)
 
     return [imei, cnum]

@@ -37,22 +37,23 @@ time.sleep(5)
 APN = 'safaricom'
 URL = 'www.ppp.one/gps.php'
 
+print("gps off")
+GPSoff(APN, URL, ser)
+print("gprs_on")
+[imei, cnum] = GPRSstartup(APN, URL, ser)
+print("gps_on")
+GPSstartup(APN, URL, ser)
+
 dataframe = {
 		"datetime" : None,
 		"lat" : None,
 		"lon" : None,
 		"alt" : None,
 		"vel" : None,
-		"hhop" : None
+		"hhop" : None,
+        "imei": imei,
+        "cnum": cnum
 	}
-
-
-print("gps off")
-GPSoff(APN, URL, ser)
-print("gprs_on")
-GPRSstartup(APN, URL, ser)
-print("gps_on")
-GPSstartup(APN, URL, ser)
 
 
 # --------------------------------------------------------------------------------------------------------------------

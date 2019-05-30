@@ -151,19 +151,6 @@ try:
 
         # print(datum_dict["pm1"])
  
-        # logging to the SD card
-        header = []
-        data = []
-        log_file = open(filename, 'a', newline='')
-        csvwriter = csv.writer(log_file)
-        for item in datum_dict:
-            if counter == 0:
-                header.append(item)
-            data.append(datum_dict[item])
-        if counter == 0: csvwriter.writerow(header)
-        csvwriter.writerow(data)
-        log_file.close()
-
         checkpoint = now
 
         # --------------------------------------------------------------------------------------------------------------------
@@ -178,6 +165,19 @@ try:
         dataframe.update(datum_dict)
         dataframe.update(gprs)
         print(dataframe)
+        
+        # logging to the SD card
+        header = []
+        data = []
+        log_file = open(filename, 'a', newline='')
+        csvwriter = csv.writer(log_file)
+        for item in datum_dict:
+            if counter == 0:
+                header.append(item)
+            data.append(datum_dict[item])
+        if counter == 0: csvwriter.writerow(header)
+        csvwriter.writerow(data)
+        log_file.close()
 
         # Prep send
         txrx_force(APN, URL, ser, 'AT+HTTPDATA='+ str(len(json.dumps(dataframe)))+',10000\r\n', 'DOWNLOAD', 5)

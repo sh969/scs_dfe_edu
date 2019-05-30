@@ -51,9 +51,11 @@ dataframe = {
 		"alt" : None,
 		"vel" : None,
 		"hhop" : None,
+	}
+gprs = {
         "imei": imei,
         "cnum": cnum
-	}
+    }
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -93,7 +95,7 @@ try:
     time.sleep(1)
     checkpoint = time.time()
     counter = 0
-    filename = str(int(checkpoint))+".csv"
+    filename = '/home/pi/log/'+str(int(checkpoint))+'.csv'
 
     while 1:    		
         # opc r1
@@ -174,6 +176,7 @@ try:
         txrx_force(APN, URL, ser, 'AT+CGNSTST=0\r\n', 'OK', 5)
 
         dataframe.update(datum_dict)
+        dataframe.update(gprs)
         print(dataframe)
 
         # Prep send

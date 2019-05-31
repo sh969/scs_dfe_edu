@@ -167,7 +167,7 @@ try:
         dataframe.update(datum_dict)
         dataframe.update(gprs)
         dataframe["counter"] = counter
-        keys_to_round = ['pm1', 'pm2.5', 'pm10', 'vel', 'tmp', 'hmd']
+        keys_to_round = ['pm1', 'pm2.5', 'pm10', 'vel', 'tmp']
         for item in dataframe:
             dataframe[item] = round(dataframe[item], 2)
         print(dataframe)

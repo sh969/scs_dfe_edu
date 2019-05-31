@@ -20,6 +20,7 @@ import sys
 from scs_core.data.json import JSONify
 import json
 import csv
+import os
 
 from scs_dfe.particulate.opc_r1.opc_r1 import OPCR1
 
@@ -34,7 +35,7 @@ from at_commands import *
 ser = serial.Serial("/dev/ttyUSB0", baudrate=115200, timeout=5)
 
 time.sleep(5)
-APN = 'safaricom'
+APN = 'TM'
 URL = 'www.ppp.one/gps.php'
 
 print("gps off")
@@ -54,7 +55,8 @@ dataframe = {
 	}
 gprs = {
         "imei": imei,
-        "cnum": cnum
+        "cnum": cnum,
+        "version": os.path.basename(__file__)
     }
 
 
@@ -102,8 +104,11 @@ try:
         datum = opc.sample()
         # print(JSONify.dumps(datum))
         datum_dict = json.loads(JSONify.dumps(datum))
-
+        
         datum_dict["counter"] = counter
+        keys_to_round = ['pm1', 'pm2.5' 'pm10', 'vel', 'tmp', 'hmd']
+        for item in keys_to_round:
+            datum_dict[item] = round(datum_dict[item], 2)
 
 
         # ads1115
@@ -115,27 +120,27 @@ try:
 
         no2_we_v = read_conversion(wrk, no2_we_channel)
         # printf("%0.6f" % no2_we_v)
-        datum_dict["no2_we_v"] = no2_we_v
+        datum_dict["no2_we_v"] = round(no2_we_v, 6)
 
         no2_ae_v = read_conversion(aux, no2_ae_channel)
         # print("%0.6f" % no2_ae_v)
-        datum_dict["no2_ae_v"] = no2_ae_v
+        datum_dict["no2_ae_v"] = round(no2_ae_v, 6)
     
         h2s_we_v = read_conversion(wrk, h2s_we_channel)
         # print("%0.6f" % h2s_we_v)
-        datum_dict["h2s_we_v"] = h2s_we_v
+        datum_dict["h2s_we_v"] = round(h2s_we_v, 6)
     
         co_we_v = read_conversion(wrk, co_we_channel)
         # print("%0.6f" % co_we_v)
-        datum_dict["co_we_v"] = co_we_v
+        datum_dict["co_we_v"] = round(co_we_v, 6)
     
         gnd_wrk_v = read_conversion(wrk, gnd_wrk_channel)
         # print("%0.6f" % gnd_wrk_v)        
-        datum_dict["gnd_wrk_v"] = gnd_wrk_v
+        datum_dict["gnd_wrk_v"] = round(gnd_wrk_v, 6)
     
         gnd_aux_v = read_conversion(aux, gnd_aux_channel)
         # print("%0.6f" % gnd_aux_v)
-        datum_dict["gnd_aux_v"] = gnd_aux_v
+        datum_dict["gnd_aux_v"] = round(gnd_aux_v, 6)
 
         # datum_dict["el_chem"] = {"no2_we_v":no2_we_v, "no2_ae_v":no2_ae_v, "h2s_we_v":h2s_we_v, "co_we_v":co_we_v, "gnd_wrk_channel":gnd_wrk_channel, "gnd_aux_channel":gnd_aux_channel}
     	
@@ -184,7 +189,8 @@ try:
         # Load data
         txrx_force(APN, URL, ser, json.dumps(dataframe) + '\r\n', 'OK', 5)    
         # Post the data
-        txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', '+HTTPACTION: 1,200,1', 5)
+        #txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', 'OK', 5) # for Charles' server
+        txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', '+HTTPACTION: 1,200,1', 5) # for Pete's server
 
         # --------------------------------------------------------------------------------------------------------------------
 

@@ -18,7 +18,6 @@ if [ $? -eq 0 ]; then
         chmod 755 start_up.sh
     else 
         echo "$FILE does not exist"
-        ./start_up.sh
     fi
 else
     echo "Offline"

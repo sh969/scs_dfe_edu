@@ -104,11 +104,7 @@ try:
         datum = opc.sample()
         # print(JSONify.dumps(datum))
         datum_dict = json.loads(JSONify.dumps(datum))
-        
-        datum_dict["counter"] = counter
-        keys_to_round = ['pm1', 'pm2.5', 'pm10', 'vel', 'tmp', 'hmd']
-        for item in keys_to_round:
-            datum_dict[item] = round(datum_dict[item], 2)
+
 
 
         # ads1115
@@ -169,6 +165,10 @@ try:
 
         dataframe.update(datum_dict)
         dataframe.update(gprs)
+        dataframe["counter"] = counter
+        keys_to_round = ['pm1', 'pm2.5', 'pm10', 'vel', 'tmp', 'hmd']
+        for item in dataframe:
+            dataframe[item] = round(dataframe[item], 2)
         print(dataframe)
         
         # logging to the SD card

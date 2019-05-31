@@ -36,8 +36,8 @@ ser = serial.Serial("/dev/ttyUSB0", baudrate=115200, timeout=5)
 
 time.sleep(5)
 APN = 'TM'
-URL = 'http://app.open-seneca.org/php/gsmUpload.php'
-#URL = 'www.ppp.one/gps.php' # Pete's server
+#URL = 'http://app.open-seneca.org/php/gsmUpload.php' # for Charles' server
+URL = 'www.ppp.one/gps.php' # Pete's server
 
 print("gps off")
 GPSoff(APN, URL, ser)
@@ -167,10 +167,6 @@ try:
         dataframe.update(datum_dict)
         dataframe.update(gprs)
         dataframe["counter"] = counter
-        keys_to_round = ['pm1', 'pm2.5', 'pm10', 'vel', 'tmp', 'hmd']
-        for item in dataframe:
-            print(dataframe[item])
-            #dataframe[item] = round(dataframe[item], 2)
         print(dataframe)
         
         # logging to the SD card
@@ -191,8 +187,8 @@ try:
         # Load data
         txrx_force(APN, URL, ser, json.dumps(dataframe) + '\r\n', 'OK', 5)    
         # Post the data
-        txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', 'OK', 5) # for Charles' server
-        #txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', '+HTTPACTION: 1,200,1', 5) # for Pete's server
+        #txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', 'OK', 5) # for Charles' server
+        txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', '+HTTPACTION: 1,200,1', 5) # for Pete's server
 
         # --------------------------------------------------------------------------------------------------------------------
 

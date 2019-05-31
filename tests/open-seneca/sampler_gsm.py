@@ -106,7 +106,7 @@ try:
         datum_dict = json.loads(JSONify.dumps(datum))
         
         datum_dict["counter"] = counter
-        keys_to_round = ['pm1', 'pm2.5' 'pm10', 'vel', 'tmp', 'hmd']
+        keys_to_round = ['pm1', 'pm2.5', 'pm10', 'vel', 'tmp', 'hmd']
         for item in keys_to_round:
             datum_dict[item] = round(datum_dict[item], 2)
 

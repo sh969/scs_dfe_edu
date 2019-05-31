@@ -36,7 +36,8 @@ ser = serial.Serial("/dev/ttyUSB0", baudrate=115200, timeout=5)
 
 time.sleep(5)
 APN = 'TM'
-URL = 'www.ppp.one/gps.php'
+URL = 'http://app.open-seneca.org/php/gsmUpload.php'
+#URL = 'www.ppp.one/gps.php' # Pete's server
 
 print("gps off")
 GPSoff(APN, URL, ser)
@@ -189,8 +190,8 @@ try:
         # Load data
         txrx_force(APN, URL, ser, json.dumps(dataframe) + '\r\n', 'OK', 5)    
         # Post the data
-        #txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', 'OK', 5) # for Charles' server
-        txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', '+HTTPACTION: 1,200,1', 5) # for Pete's server
+        txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', 'OK', 5) # for Charles' server
+        #txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', '+HTTPACTION: 1,200,1', 5) # for Pete's server
 
         # --------------------------------------------------------------------------------------------------------------------
 

@@ -167,13 +167,10 @@ try:
         dataframe.update(datum_dict)
         dataframe.update(gprs)
         dataframe["counter"] = counter
-        hmd = float(dataframe['hmd'][:-1])
-        dataframe['hmd'] = round(hmd, 2)
-        tmp = float(dataframe['tmp'][:-1])
-        dataframe['tmp'] = round(tmp, 2)
-        keys_to_round = ['pm1', 'pm2.5', 'pm10', 'vel']
+        keys_to_round = ['pm1', 'pm2.5', 'pm10', 'vel', 'tmp', 'hmd']
         for item in dataframe:
-            dataframe[item] = round(dataframe[item], 2)
+            print(dataframe[item])
+            #dataframe[item] = round(dataframe[item], 2)
         print(dataframe)
         
         # logging to the SD card

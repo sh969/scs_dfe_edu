@@ -47,6 +47,7 @@ print("gps_on")
 GPSstartup(APN, URL, ser)
 
 URL = URL+"?imei="+str(imei)+"&simnumber="+str(cnum)+"/"
+print(URL)
 
 dataframe = {
 		"datetime" : None,

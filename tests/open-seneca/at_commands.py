@@ -88,15 +88,16 @@ def GPRSstartup(APN, URL, port):
     cnum = txrx_force(APN, URL, port, 'AT+CCID\r\n', 'OK', 5)[1]
     time.sleep(1)
     print(cnum)
-    URL = URL+"?imei="+str(imei)+"&simnumber="+str(cnum)
-    print(URL)
+
+    newURL = URL+"?imei="+str(imei)+"&simnumber="+str(cnum)
+    print(newURL)
     
     #Put in the URL of the PHP webpage where you will post
-    txrx_force(APN, URL, port, 'AT+HTTPPARA="URL","' + URL + '"\r\n', 'OK', 5)
+    txrx_force(APN, newURL, port, 'AT+HTTPPARA="URL","' + newURL + '"\r\n', 'OK', 5)
     time.sleep(1)
     
     #Type of content
-    txrx_force(APN, URL, port, 'AT+HTTPPARA="CONTENT","application/json"\r\n', 'OK', 5)
+    txrx_force(APN, newURL, port, 'AT+HTTPPARA="CONTENT","application/json"\r\n', 'OK', 5)
     time.sleep(1)
 
     return [imei, cnum, newURL]

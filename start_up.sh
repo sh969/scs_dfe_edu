@@ -28,4 +28,4 @@ cd /home/pi/SCS/scs_dfe_edu/tests/open-seneca/
 
 bash -c "export PYTHONPATH=/home/pi/SCS/scs_dev/src:/home/pi/SCS/scs_osio/src:/$"
 
-python3 ./sampler_gsm.py
+python3 ./sampler_gsm_v2.py

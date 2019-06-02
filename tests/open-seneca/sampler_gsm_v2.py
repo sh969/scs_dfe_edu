@@ -20,6 +20,7 @@ import sys
 from scs_core.data.json import JSONify
 import json
 import csv
+import os
 
 from scs_dfe.particulate.opc_r1.opc_r1 import OPCR1
 
@@ -35,7 +36,15 @@ ser = serial.Serial("/dev/ttyUSB0", baudrate=115200, timeout=5)
 
 time.sleep(5)
 APN = 'TM'
-URL = 'www.ppp.one/gps.php'
+rawURL = 'http://app.open-seneca.org/php/gsmUpload.php' # for Charles' server
+#rawURL = 'www.ppp.one/gps.php' # Pete's server
+
+print("gps off")
+GPSoff(APN, rawURL, ser)
+print("gprs_on")
+[imei, cnum, URL] = GPRSstartup(APN, rawURL, ser)
+print("gps_on")
+GPSstartup(APN, URL, ser)
 
 dataframe = {
 		"datetime" : None,
@@ -43,16 +52,13 @@ dataframe = {
 		"lon" : None,
 		"alt" : None,
 		"vel" : None,
-		"hhop" : None
+		"hhop" : None,
 	}
-
-
-print("gps off")
-GPSoff(ser)
-print("gprs_on")
-GPRSstartup(ser, APN, URL)
-print("gps_on")
-GPSstartup(ser)
+gprs = {
+        "imei": imei,
+        "cnum": cnum,
+        "version": os.path.basename(__file__)
+    }
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -92,7 +98,7 @@ try:
     time.sleep(1)
     checkpoint = time.time()
     counter = 0
-    filename = str(int(checkpoint))+".csv"
+    filename = '/home/pi/log/'+str(int(checkpoint))+'.csv'
 
     while 1:    		
         # opc r1
@@ -100,7 +106,6 @@ try:
         # print(JSONify.dumps(datum))
         datum_dict = json.loads(JSONify.dumps(datum))
 
-        datum_dict["counter"] = counter
 
 
         # ads1115
@@ -112,27 +117,27 @@ try:
 
         no2_we_v = read_conversion(wrk, no2_we_channel)
         # printf("%0.6f" % no2_we_v)
-        datum_dict["no2_we_v"] = no2_we_v
+        datum_dict["no2_we_v"] = round(no2_we_v, 6)
 
         no2_ae_v = read_conversion(aux, no2_ae_channel)
         # print("%0.6f" % no2_ae_v)
-        datum_dict["no2_ae_v"] = no2_ae_v
+        datum_dict["no2_ae_v"] = round(no2_ae_v, 6)
     
         h2s_we_v = read_conversion(wrk, h2s_we_channel)
         # print("%0.6f" % h2s_we_v)
-        datum_dict["h2s_we_v"] = h2s_we_v
+        datum_dict["h2s_we_v"] = round(h2s_we_v, 6)
     
         co_we_v = read_conversion(wrk, co_we_channel)
         # print("%0.6f" % co_we_v)
-        datum_dict["co_we_v"] = co_we_v
+        datum_dict["co_we_v"] = round(co_we_v, 6)
     
         gnd_wrk_v = read_conversion(wrk, gnd_wrk_channel)
         # print("%0.6f" % gnd_wrk_v)        
-        datum_dict["gnd_wrk_v"] = gnd_wrk_v
+        datum_dict["gnd_wrk_v"] = round(gnd_wrk_v, 6)
     
         gnd_aux_v = read_conversion(aux, gnd_aux_channel)
         # print("%0.6f" % gnd_aux_v)
-        datum_dict["gnd_aux_v"] = gnd_aux_v
+        datum_dict["gnd_aux_v"] = round(gnd_aux_v, 6)
 
         # datum_dict["el_chem"] = {"no2_we_v":no2_we_v, "no2_ae_v":no2_ae_v, "h2s_we_v":h2s_we_v, "co_we_v":co_we_v, "gnd_wrk_channel":gnd_wrk_channel, "gnd_aux_channel":gnd_aux_channel}
     	
@@ -148,39 +153,42 @@ try:
 
         # print(datum_dict["pm1"])
  
-        # logging to the SD card
-        header = []
-        data = []
-        log_file = open(filename, 'a', newline='')
-        csvwriter = csv.writer(log_file)
-        for item in datum_dict:
-            if counter == 0:
-                header.append(item)
-            data.append(datum_dict[item])
-        if counter == 0: csvwriter.writerow(header)
-        csvwriter.writerow(data)
-        log_file.close()
-
         checkpoint = now
 
         # --------------------------------------------------------------------------------------------------------------------
 
         # Start GNSS data received via UART
-        txrx_force(ser, 'AT+CGNSTST=1\r\n', 'OK', 5)
+        txrx_force(APN, URL, ser, 'AT+CGNSTST=1\r\n', 'OK', 5)
         # Get one dataframe (see above) from GNSS string
-        dataframe = readGPS(ser, dataframe)          
+        dataframe = readGPS(APN, URL, ser, dataframe)          
         # Stop GNSS data received via UART so you can send data via GPRS    
-        txrx_force(ser, 'AT+CGNSTST=0\r\n', 'OK', 5)
+        txrx_force(APN, URL, ser, 'AT+CGNSTST=0\r\n', 'OK', 5)
 
         dataframe.update(datum_dict)
+        dataframe.update(gprs)
+        dataframe["counter"] = counter
         print(dataframe)
+        
+        # logging to the SD card
+        header = []
+        data = []
+        log_file = open(filename, 'a', newline='')
+        csvwriter = csv.writer(log_file)
+        for item in dataframe:
+            if counter == 0:
+                header.append(item)
+            data.append(dataframe[item])
+        if counter == 0: csvwriter.writerow(header)
+        csvwriter.writerow(data)
+        log_file.close()
 
         # Prep send
-        txrx_force(ser, 'AT+HTTPDATA='+ str(len(json.dumps(dataframe)))+',10000\r\n', 'DOWNLOAD', 5)
+        txrx_force(APN, URL, ser, 'AT+HTTPDATA='+ str(len(json.dumps(dataframe)))+',10000\r\n', 'DOWNLOAD', 5)
         # Load data
-        txrx_force(ser, json.dumps(dataframe) + '\r\n', 'OK', 5)    
+        txrx_force(APN, URL, ser, json.dumps(dataframe) + '\r\n', 'OK', 5)    
         # Post the data
-        txrx_force(ser, 'AT+HTTPACTION=1\r\n', '+HTTPACTION: 1,200,1', 5)
+        txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', 'OK', 5) # for Charles' server
+        #txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', '+HTTPACTION: 1,200,1', 5) # for Pete's server
 
         # --------------------------------------------------------------------------------------------------------------------
 

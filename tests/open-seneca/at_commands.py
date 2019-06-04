@@ -80,12 +80,12 @@ def GPRSstartup(APN, URL, port):
     time.sleep(1)
 
     #Read IMEI number
-    imei = txrx_force(APN, URL, port, 'AT+GSN\r\n', 'OK', 5)
+    imei = txrx_force(APN, URL, port, 'AT+GSN\r\n', 'OK', 5)[-1]
     time.sleep(1)
     print(imei)
 
     #Read SIM number
-    cnum = txrx_force(APN, URL, port, 'AT+CCID\r\n', 'OK', 5)
+    cnum = txrx_force(APN, URL, port, 'AT+CCID\r\n', 'OK', 5)[-1]
     time.sleep(1)
     print(cnum)
 
@@ -100,7 +100,7 @@ def GPRSstartup(APN, URL, port):
     txrx_force(APN, newURL, port, 'AT+HTTPPARA="CONTENT","application/json"\r\n', 'OK', 5)
     time.sleep(1)
 
-    return [imei, cnum, newURL]
+    return [imei, cnum]
 
 def GPSstartup(APN, URL, port):
     #Check there

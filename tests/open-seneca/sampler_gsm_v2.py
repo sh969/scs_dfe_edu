@@ -36,13 +36,13 @@ ser = serial.Serial("/dev/ttyUSB0", baudrate=115200, timeout=5)
 
 time.sleep(5)
 APN = 'TM'
-rawURL = 'http://app.open-seneca.org/php/gsmUpload.php' # for Charles' server
-#rawURL = 'www.ppp.one/gps.php' # Pete's server
+URL = 'http://app.open-seneca.org/php/gsmUpload.php' # for Charles' server
+#URL = 'www.ppp.one/gps.php' # Pete's server
 
 print("gps off")
-GPSoff(APN, rawURL, ser)
+GPSoff(APN, URL, ser)
 print("gprs_on")
-[imei, cnum, URL] = GPRSstartup(APN, rawURL, ser)
+[imei, cnum] = GPRSstartup(APN, URL, ser)
 print("gps_on")
 GPSstartup(APN, URL, ser)
 

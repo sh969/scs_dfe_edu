@@ -91,6 +91,7 @@ def GPRSstartup(APN, URL, port):
     cnum = cnum[1]
     cnum = cnum[:-1]
     print(cnum)
+    time.sleep(1)
 
     newURL = URL+"?imei="+str(imei)+"&simnumber="+str(cnum)
     print(newURL)

@@ -88,7 +88,7 @@ def GPRSstartup(APN, URL, port):
     #Read SIM number
     cnum = txrx_force(APN, URL, port, 'AT+CCID\r\n', 'OK', 5)
     time.sleep(1)
-    cnum = cnum[1]
+    cnum = cnum[1][:-1]
     print(cnum)
 
     newURL = URL+"?imei="+str(imei)+"&simnumber="+str(cnum)

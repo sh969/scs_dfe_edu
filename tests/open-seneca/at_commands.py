@@ -30,7 +30,7 @@ def txrx_force(APN, URL, port, text, expected_answer, time_out):
     port.write(text.encode())
     return sim800_respond(APN, URL, port, expected_answer, time_out)     
 
-def sendAT(text):
+def sendAT(port, text):
     port.write(text.encode())
     time.sleep(1)
     response = port.readline().strip().decode('ascii')
@@ -87,7 +87,7 @@ def GPRSstartup(APN, URL, port):
 
     #Read IMEI number
     print("-----------")
-    imei = sendAT('AT+GSN\r\n')
+    imei = sendAT(port, 'AT+GSN\r\n')
     # imei = txrx_force(APN, URL, port, 'AT+GSN\r\n', 'OK', 5)
     # time.sleep(3)
     # imei = imei[1]
@@ -95,7 +95,7 @@ def GPRSstartup(APN, URL, port):
     print("-----------")
 
     #Read SIM number
-    cnum = sendAT('AT+CCID\r\n')
+    cnum = sendAT(port, 'AT+CCID\r\n')
     # cnum = txrx_force(APN, URL, port, 'AT+CCID\r\n', 'OK', 5)
     # time.sleep(3)
     # cnum = cnum[1][:-1]

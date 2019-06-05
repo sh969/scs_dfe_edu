@@ -25,10 +25,19 @@ fi
 
 echo "Starting script"
 
+FILE=/home/pi/log/imei.txt
+if [ -f "$FILE" ]; then
+    echo "$FILE exist"
+else
+    echo "IMEI" > $FILE
+imei=$(cat $FILE)
+
 cd /home/pi/SCS/scs_dfe_edu/tests/open-seneca/
 version=$(git rev-list --count develop)
-echo "scs-rpi-"$version > hostname
+hostname = "os-"$imei"-"$version
+echo $hostname > hostname
 sudo mv -f hostname /etc
+echo "New hostname: "$hostname
 
 bash -c "export PYTHONPATH=/home/pi/SCS/scs_dev/src:/home/pi/SCS/scs_osio/src:/$"
 

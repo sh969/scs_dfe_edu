@@ -27,6 +27,7 @@ echo "Starting script"
 
 cd /home/pi/SCS/scs_dfe_edu/tests/open-seneca/
 version=$(git rev-list --count develop)
+echo version
 
 bash -c "export PYTHONPATH=/home/pi/SCS/scs_dev/src:/home/pi/SCS/scs_osio/src:/$"
 

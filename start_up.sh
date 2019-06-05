@@ -26,9 +26,7 @@ fi
 echo "Changing hostname"
 
 FILE=/home/pi/log/imei.txt
-if [ -f "$FILE" ]; then
-    echo "$FILE exist"
-else
+if ! [ -f "$FILE" ]; then
     echo "IMEI" > $FILE
 fi
 imei=$(cat $FILE)

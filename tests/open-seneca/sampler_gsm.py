@@ -46,6 +46,9 @@ print("gprs_on")
 print("gps_on")
 GPSstartup(APN, URL, ser)
 
+version = ""
+try: version = sys.argv[1]
+
 dataframe = {
 		"datetime" : None,
 		"lat" : None,
@@ -57,8 +60,7 @@ dataframe = {
 gprs = {
         "imei": imei,
         "cnum": cnum,
-        try: "version": sys.argv[1]
-        except IndexError: "version": os.path.basename(__file__)
+        "version": version
     }
 
 

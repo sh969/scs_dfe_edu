@@ -10,7 +10,7 @@ if [ $? -eq 0 ]; then
     git clone https://github.com/sh969/scs_dfe_edu.git # && sleep 30 ; kill $!
     FILE=/home/pi/scs_dfe_edu/README.md
     if [ -f "$FILE" ]; then
-        echo "$FILE exist"
+        echo "$FILE exists"
         rm -r -f /home/pi/SCS/scs_dfe_edu
         cp -r -f /home/pi/scs_dfe_edu /home/pi/SCS/
         cp -f /home/pi/SCS/scs_dfe_edu/start_up.sh /home/pi/
@@ -26,15 +26,16 @@ fi
 echo "Changing hostname"
 
 FILE=/home/pi/log/imei.txt
-# if [ -f "$FILE" ]; then
-#     echo "$FILE exist"
-# else
-#     sudo echo "IMEI" > $FILE
+if [ -f "$FILE" ]; then
+    echo "$FILE exist"
+else
+    echo "IMEI" > $FILE
+fi
 imei=$(cat $FILE)
-echo $imei
 
 cd /home/pi/SCS/scs_dfe_edu/tests/open-seneca/
 version=$(git rev-list --count develop)
+
 echo "os-"$imei"-"$version > hostname
 sudo mv -f hostname /etc
 

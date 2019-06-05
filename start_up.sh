@@ -31,12 +31,12 @@ if [ -f "$FILE" ]; then
 else
     echo "IMEI" > $FILE
 imei=$(cat $FILE)
+echo $imei
 
 cd /home/pi/SCS/scs_dfe_edu/tests/open-seneca/
 version=$(git rev-list --count develop)
 echo "os-"$imei"-"$version > hostname
 sudo mv -f hostname /etc
-echo "os-"$imei"-"$version
 
 bash -c "export PYTHONPATH=/home/pi/SCS/scs_dev/src:/home/pi/SCS/scs_osio/src:/$"
 

@@ -25,13 +25,13 @@ fi
 
 echo "Starting script"
 
-# FILE=/home/pi/log/imei.txt
-# if [ -f "$FILE" ]; then
-#     echo "$FILE exist"
-# else
-#     echo "IMEI" > $FILE
-# imei=$(cat $FILE)
-# echo $imei
+FILE=/home/pi/log/imei.txt
+if [ -f "$FILE" ]; then
+    echo "$FILE exist"
+else
+    echo "IMEI" > $FILE
+imei=$(cat $FILE)
+echo $imei
 
 cd /home/pi/SCS/scs_dfe_edu/tests/open-seneca/
 # version=$(git rev-list --count develop)

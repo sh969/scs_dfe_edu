@@ -10,7 +10,7 @@ def sim800_respond(APN, URL, port, expected_answer, time_out):
     while answer == False:
         response.append(port.readline().strip().decode('ascii'))
         #print(abort)
-        print(response[-1])
+        # print(response[-1])
         if (expected_answer in response[-1]) or (abort >= time_out):
             answer = True
         elif "ERROR" in response[-1] and (("AT+HTTPINIT" in response[-2]) or ("AT+SAPBR=1,1" in response[-2])) == 0:
@@ -24,11 +24,11 @@ def sim800_respond(APN, URL, port, expected_answer, time_out):
         else:
             time.sleep(0.1)
             abort = abort + 1
-    return response
+    return answer
         
 def txrx_force(APN, URL, port, text, expected_answer, time_out):
     port.write(text.encode())
-    return sim800_respond(APN, URL, port, expected_answer, time_out)     
+    sim800_respond(APN, URL, port, expected_answer, time_out)     
 
 def sendAT(port, text):
     port.write(text.encode())
@@ -37,7 +37,7 @@ def sendAT(port, text):
         response = port.readline().strip().decode('ascii')
         if 'AT' not in response and 'OK' not in response and response != '':
             return response
-    return response
+    return 'timeout'
     
 def GPRSstartup(APN, URL, port):
     #Reset
@@ -89,21 +89,12 @@ def GPRSstartup(APN, URL, port):
     time.sleep(1)
 
     #Read IMEI number
-    print("-----------")
     imei = sendAT(port, 'AT+GSN\r\n')
-    # imei = txrx_force(APN, URL, port, 'AT+GSN\r\n', 'OK', 5)
-    # time.sleep(3)
-    # imei = imei[1]
     print(imei)
-    print("-----------")
 
     #Read SIM number
-    cnum = sendAT(port, 'AT+CCID\r\n')
-    # cnum = txrx_force(APN, URL, port, 'AT+CCID\r\n', 'OK', 5)
-    # time.sleep(3)
-    # cnum = cnum[1][:-1]
+    cnum = sendAT(port, 'AT+CCID\r\n')[:-1]
     print(cnum)
-    print("-----------")
 
     newURL = URL+"?imei="+str(imei)+"&simnumber="+str(cnum)
     print(newURL)

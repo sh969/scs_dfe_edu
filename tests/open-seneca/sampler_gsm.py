@@ -68,7 +68,7 @@ gprs = {
 imei_file = open('/home/pi/log/imei.txt', 'w')
 imei_file.write(str(imei))
 imei_file.close()
-time.sleep(5)
+time.sleep(2)
 
 
 # --------------------------------------------------------------------------------------------------------------------

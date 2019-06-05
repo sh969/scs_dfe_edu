@@ -26,9 +26,8 @@ fi
 echo "Starting script"
 
 cd /home/pi/SCS/scs_dfe_edu/tests/open-seneca/
-version=$(git rev-list --count develop)
-echo version
+version=$git rev-list --count develop
 
 bash -c "export PYTHONPATH=/home/pi/SCS/scs_dev/src:/home/pi/SCS/scs_osio/src:/$"
 
-python3 ./sampler_gsm.py version
+python3 ./sampler_gsm.py $version

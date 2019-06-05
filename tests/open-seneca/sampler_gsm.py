@@ -46,9 +46,6 @@ print("gprs_on")
 print("gps_on")
 GPSstartup(APN, URL, ser)
 
-# URL = URL+"?imei="+str(imei)+"&simnumber="+str(cnum)
-print(URL)
-
 dataframe = {
 		"datetime" : None,
 		"lat" : None,
@@ -60,7 +57,7 @@ dataframe = {
 gprs = {
         "imei": imei,
         "cnum": cnum,
-        "version": os.path.basename(__file__)
+        "version": sys.argv[0] # os.path.basename(__file__)
     }
 
 

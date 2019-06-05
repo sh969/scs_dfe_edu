@@ -28,8 +28,8 @@ echo "Starting script"
 FILE=/home/pi/log/imei.txt
 if [ -f "$FILE" ]; then
     echo "$FILE exist"
-else
-    sudo echo "IMEI" > $FILE
+# else
+#     sudo echo "IMEI" > $FILE
 imei=$(cat $FILE)
 echo $imei
 

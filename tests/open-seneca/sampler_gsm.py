@@ -46,8 +46,10 @@ print("gprs_on")
 print("gps_on")
 GPSstartup(APN, URL, ser)
 
-version = ""
-try: version = sys.argv[1]
+try: 
+    version = sys.argv[1]
+except:
+    version = ""
 
 dataframe = {
 		"datetime" : None,

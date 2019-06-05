@@ -83,7 +83,7 @@ def GPRSstartup(APN, URL, port):
     text = 'AT+GSN\r\n'
     port.write(text.encode())
     time.sleep(1)
-    cnum = port.readline().strip().decode('ascii')
+    imei = port.readline().strip().decode('ascii')
     # imei = txrx_force(APN, URL, port, 'AT+GSN\r\n', 'OK', 5)
     # time.sleep(3)
     # imei = imei[1]

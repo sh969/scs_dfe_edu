@@ -23,11 +23,11 @@ else
     echo "Offline"
 fi
 
-echo "Starting script"
+echo "Changing hostname"
 
 FILE=/home/pi/log/imei.txt
-if [ -f "$FILE" ]; then
-    echo "$FILE exist"
+# if [ -f "$FILE" ]; then
+#     echo "$FILE exist"
 # else
 #     sudo echo "IMEI" > $FILE
 imei=$(cat $FILE)
@@ -37,6 +37,8 @@ cd /home/pi/SCS/scs_dfe_edu/tests/open-seneca/
 version=$(git rev-list --count develop)
 echo "os-"$imei"-"$version > hostname
 sudo mv -f hostname /etc
+
+echo "Starting script"
 
 bash -c "export PYTHONPATH=/home/pi/SCS/scs_dev/src:/home/pi/SCS/scs_osio/src:/$"
 

@@ -65,6 +65,10 @@ gprs = {
         "version": version
     }
 
+imei_file = open('/home/pi/log/imei.txt', 'w')
+imei_file.write(str(imei))
+imei_file.close()
+
 
 # --------------------------------------------------------------------------------------------------------------------
 

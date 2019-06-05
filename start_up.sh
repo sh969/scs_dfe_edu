@@ -34,9 +34,9 @@ imei=$(cat $FILE)
 echo $imei
 
 cd /home/pi/SCS/scs_dfe_edu/tests/open-seneca/
-# version=$(git rev-list --count develop)
-# echo "os-"$imei"-"$version > hostname
-# sudo mv -f hostname /etc
+version=$(git rev-list --count develop)
+echo "os-"$imei"-"$version > hostname
+sudo mv -f hostname /etc
 
 bash -c "export PYTHONPATH=/home/pi/SCS/scs_dev/src:/home/pi/SCS/scs_osio/src:/$"
 

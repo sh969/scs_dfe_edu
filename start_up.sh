@@ -29,7 +29,7 @@ FILE=/home/pi/log/imei.txt
 if [ -f "$FILE" ]; then
     echo "$FILE exist"
 else
-    echo "IMEI" > $FILE
+    sudo echo "IMEI" > $FILE
 imei=$(cat $FILE)
 echo $imei
 

@@ -57,7 +57,7 @@ dataframe = {
 gprs = {
         "imei": imei,
         "cnum": cnum,
-        "version": sys.argv[0] # os.path.basename(__file__)
+        "version": sys.argv[1] # os.path.basename(__file__)
     }
 
 

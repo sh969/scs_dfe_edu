@@ -32,9 +32,8 @@ def txrx_force(APN, URL, port, text, expected_answer, time_out):
 
 def sendAT(port, text):
     port.write(text.encode())
-    time.sleep(1)
-    response = port.readline().strip().decode('ascii')
-    return response
+    time.sleep(2)
+    return port.readline().strip().decode('ascii')
     
 def GPRSstartup(APN, URL, port):
     #Reset

@@ -57,7 +57,8 @@ dataframe = {
 gprs = {
         "imei": imei,
         "cnum": cnum,
-        "version": sys.argv[1] # os.path.basename(__file__)
+        try: "version": sys.argv[1]
+        except IndexError: "version": os.path.basename(__file__)
     }
 
 

@@ -26,7 +26,7 @@ fi
 echo "Starting script"
 
 cd /home/pi/SCS/scs_dfe_edu/tests/open-seneca/
-version=$git rev-list --count develop
+version=$(git rev-list --count develop)
 echo "scs-rpi-"$version > hostname
 mv -f hostname /etc
 

@@ -32,7 +32,7 @@ def txrx_force(APN, URL, port, text, expected_answer, time_out):
 
 def sendAT(port, text):
     port.write(text.encode())
-    for i from 0 to 10:
+    for i in range(0,10):
         time.sleep(1)
         response = port.readline().strip().decode('ascii')
         if 'AT' not in response and 'OK' not in response and response != '':

@@ -46,11 +46,11 @@ print("gprs_on")
 print("gps_on")
 GPSstartup(APN, URL, ser)
 
-# try: # version number according to filename
-#     version = sys.argv[1]
-# except:
-#     version = ""
-version = 'v190722' # version number in YYMMDD format
+try: # version number according to Github commit number (if given in argv[1])
+    version = sys.argv[1]
+except:
+    version = ""
+# version = 'v190722' # version number in YYMMDD format
 
 dataframe = {
 		"datetime" : None,

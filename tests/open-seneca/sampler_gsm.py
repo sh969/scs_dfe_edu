@@ -189,7 +189,9 @@ try:
             for item in dataframe:
                 header.append(item)
                 data.append(dataframe[item])
-            if not headerWritten: csvwriter.writerow(header)
+            if not headerWritten: 
+                csvwriter.writerow(header)
+                headerWritten = True
             csvwriter.writerow(data)
             log_file.close()
 

@@ -46,8 +46,10 @@ print("gprs_on")
 print("gps_on")
 GPSstartup(APN, URL, ser)
 
-# URL = URL+"?imei="+str(imei)+"&simnumber="+str(cnum)
-print(URL)
+try: 
+    version = sys.argv[1]
+except:
+    version = ""
 
 dataframe = {
 		"datetime" : None,
@@ -60,8 +62,13 @@ dataframe = {
 gprs = {
         "imei": imei,
         "cnum": cnum,
-        "version": os.path.basename(__file__)
+        "version": version
     }
+
+imei_file = open('/home/pi/log/imei.txt', 'w')
+imei_file.write(str(imei))
+imei_file.close()
+time.sleep(2)
 
 
 # --------------------------------------------------------------------------------------------------------------------

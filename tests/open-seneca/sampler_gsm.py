@@ -46,10 +46,11 @@ print("gprs_on")
 print("gps_on")
 GPSstartup(APN, URL, ser)
 
-try: 
-    version = sys.argv[1]
-except:
-    version = ""
+# try: # version number according to filename
+#     version = sys.argv[1]
+# except:
+#     version = ""
+version = 'v190722' # version number in YYMMDD format
 
 dataframe = {
 		"datetime" : None,
@@ -65,10 +66,10 @@ gprs = {
         "version": version
     }
 
+headerWritten = False
 imei_file = open('/home/pi/log/imei.txt', 'w')
 imei_file.write(str(imei))
 imei_file.close()
-time.sleep(2)
 
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -180,22 +181,28 @@ try:
         print(dataframe)
         
         # logging to the SD card
-        header = []
-        data = []
-        log_file = open(filename, 'a', newline='')
-        csvwriter = csv.writer(log_file)
-        for item in dataframe:
-            if counter == 0:
+        if counter > 0: # datapoint 0 incomplete, start logging from datapoint 1
+            header = []
+            data = []
+            log_file = open(filename, 'a', newline='')
+            csvwriter = csv.writer(log_file)
+            for item in dataframe:
                 header.append(item)
-            data.append(dataframe[item])
-        if counter == 0: csvwriter.writerow(header)
-        csvwriter.writerow(data)
-        log_file.close()
+                data.append(dataframe[item])
+            if not headerWritten: csvwriter.writerow(header)
+            csvwriter.writerow(data)
+            log_file.close()
+
+        # only send reduced dataframe to save costs
+        msgcolumns = ['cnum','version','co_we_v','hmd','lat','lon','imei','pm10','counter','no2_we_v','no2_ae_v','tmp','h2s_we_v','pm2.5']
+        msgframe = {}
+        for item in msgcolumns:
+            msgframe[item] = dataframe[item]
 
         # Prep send
-        txrx_force(APN, URL, ser, 'AT+HTTPDATA='+ str(len(json.dumps(dataframe)))+',10000\r\n', 'DOWNLOAD', 5)
+        txrx_force(APN, URL, ser, 'AT+HTTPDATA='+ str(len(json.dumps(msgframe)))+',10000\r\n', 'DOWNLOAD', 5)
         # Load data
-        txrx_force(APN, URL, ser, json.dumps(dataframe) + '\r\n', 'OK', 5)    
+        txrx_force(APN, URL, ser, json.dumps(msgframe) + '\r\n', 'OK', 5)    
         # Post the data
         txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', 'OK', 5) # for Charles' server
         #txrx_force(APN, URL, ser, 'AT+HTTPACTION=1\r\n', '+HTTPACTION: 1,200,1', 5) # for Pete's server

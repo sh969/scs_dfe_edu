@@ -22,7 +22,7 @@ import json
 import csv
 import os
 
-from scs_dfe.particulate.opc_r1.opc_r1 import OPCR1
+from scs_dfe.particulate.opc_r1.opc_r1 import OPCR1 # originally located in scs_dfe_eng, sampling time 10s by default
 
 # Pi Hat related imports
 import serial
